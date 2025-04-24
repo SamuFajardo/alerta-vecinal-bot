@@ -2,7 +2,7 @@ from telegram import Update, KeyboardButton, ReplyKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, ConversationHandler
 import os
 
-TOKEN = os.getenv("7860291477:AAFpBxqGMzUo2AKUS1Q-s88g5FCuoFu0oj8")
+TOKEN = os.getenv("BOT_TOKEN")
 
 REPORTE = 1
 
