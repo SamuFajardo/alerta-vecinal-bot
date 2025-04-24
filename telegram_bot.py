@@ -1,7 +1,18 @@
-from telegram import Update, KeyboardButton, ReplyKeyboardMarkup
-from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, ConversationHandler
 import os
+import asyncio
+from telegram import Update, KeyboardButton, ReplyKeyboardMarkup
+from telegram.ext import (
+    ApplicationBuilder,
+    CommandHandler,
+    MessageHandler,
+    filters,
+    ContextTypes,
+    ConversationHandler
+)
+from dotenv import load_dotenv
 
+# Cargar variables del .env
+load_dotenv()
 TOKEN = os.getenv("BOT_TOKEN")
 
 REPORTE = 1
@@ -55,6 +66,14 @@ async def main():
     print("Bot funcionando...")
     await app.run_polling()
 
-if __name__ == "__main__":
-    import asyncio
+# Manejo robusto del event loop
+try:
+    loop = asyncio.get_running_loop()
+except RuntimeError:
+    loop = None
+
+if loop and loop.is_running():
+    print("Event loop ya está corriendo, agregando tarea...")
+    asyncio.ensure_future(main())
+else:
     asyncio.run(main())
