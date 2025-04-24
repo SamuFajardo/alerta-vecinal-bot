@@ -1,5 +1,4 @@
 import os
-import asyncio
 from telegram import Update, KeyboardButton, ReplyKeyboardMarkup
 from telegram.ext import (
     ApplicationBuilder,
@@ -10,8 +9,9 @@ from telegram.ext import (
     ConversationHandler
 )
 from dotenv import load_dotenv
+import asyncio
 
-# Cargar variables del .env
+# Cargar variables desde .env
 load_dotenv()
 TOKEN = os.getenv("BOT_TOKEN")
 
@@ -28,9 +28,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 async def reporte(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text(
-        "🚨 Escribí la descripción del robo o incidente ocurrido."
-    )
+    await update.message.reply_text("🚨 Escribí la descripción del robo o incidente ocurrido.")
     return REPORTE
 
 async def recibir_reporte(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -51,7 +49,8 @@ async def cancelar(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Operación cancelada.")
     return ConversationHandler.END
 
-async def main():
+def run():
+    # Esta función no usa asyncio.run()
     app = ApplicationBuilder().token(TOKEN).build()
 
     conv_handler = ConversationHandler(
@@ -63,17 +62,10 @@ async def main():
     app.add_handler(CommandHandler("start", start))
     app.add_handler(conv_handler)
     app.add_handler(MessageHandler(filters.PHOTO, recibir_foto))
+
     print("Bot funcionando...")
-    await app.run_polling()
+    # Esto inicia el polling directamente, evitando conflictos de loop
+    app.run_polling()
 
-# Manejo robusto del event loop
-try:
-    loop = asyncio.get_running_loop()
-except RuntimeError:
-    loop = None
-
-if loop and loop.is_running():
-    print("Event loop ya está corriendo, agregando tarea...")
-    asyncio.ensure_future(main())
-else:
-    asyncio.run(main())
+if __name__ == "__main__":
+    run()
