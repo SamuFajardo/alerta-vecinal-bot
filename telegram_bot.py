@@ -13,7 +13,7 @@ import asyncio
 
 # Cargar variables desde .env
 load_dotenv()
-TOKEN = os.getenv("BOT_TOKEN")
+TOKEN = os.getenv("colocar token")
 
 REPORTE = 1
 
@@ -51,7 +51,7 @@ async def cancelar(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 def run():
     # Esta función no usa asyncio.run()
-    app = ApplicationBuilder().token(TOKEN).build()
+    app = ApplicationBuilder().token(colocar token).build()
 
     conv_handler = ConversationHandler(
         entry_points=[MessageHandler(filters.TEXT & filters.Regex("📝 Escribir reporte"), reporte)],
