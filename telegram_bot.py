@@ -33,13 +33,13 @@ async def reporte(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def recibir_reporte(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reporte = update.message.text
-    chat_id = "-1002688551031"
+    chat_id = "LLENA CON TU id"
     await context.bot.send_message(chat_id=chat_id, text=f"🚨 Nuevo reporte recibido:\n{reporte}")
     await update.message.reply_text(f"📝 Reporte recibido: {reporte}. Gracias por tu colaboración.")
     return ConversationHandler.END
 
 async def recibir_foto(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    chat_id = "-1002688551031"
+    chat_id = "LLENA CON TU id"
     photo = update.message.photo[-1].file_id
     await context.bot.send_photo(chat_id=chat_id, photo=photo, caption="🚨 Nuevo reporte con foto recibido.")
     await update.message.reply_text("📷 Foto recibida. ¡Gracias por tu reporte!")
